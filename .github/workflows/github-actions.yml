@@ -31,7 +31,7 @@ jobs:
           fi
       - name: Clear potentially corrupted buildroot dl cache
         run: |
-          rm -rf /home/sedex/.buildroot-cache/dl/aesd-assignments || true
+          rm -rf /github/home/.dl/aesd-assignments || true
 
 
       - name: Run full test
