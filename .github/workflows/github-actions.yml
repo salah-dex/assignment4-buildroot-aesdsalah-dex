@@ -21,26 +21,5 @@ jobs:
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
-      - name: Setup persistent cache
-        run: |
-          mkdir -p /home/sedex/.buildroot-cache/output
-          mkdir -p /home/sedex/.buildroot-cache/ccache
-          ln -sfn /home/sedex/.buildroot-cache/output $GITHUB_WORKSPACE/buildroot/output
-          if [ -f /home/sedex/.buildroot-cache/buildroot.config ]; then
-            cp /home/sedex/.buildroot-cache/buildroot.config $GITHUB_WORKSPACE/buildroot/.config
-          fi
-      - name: Clear potentially corrupted buildroot dl cache
-        run: |
-          rm -rf /github/home/.dl/aesd-assignments || true
-
-
       - name: Run full test
-        env:
-          CCACHE_DIR: /home/sedex/.buildroot-cache/ccache
         run: ./full-test.sh
-
-      - name: Save config for next run
-        if: always()
-        run: |
-          cp $GITHUB_WORKSPACE/buildroot/.config \
-             /home/sedex/.buildroot-cache/buildroot.config || true
