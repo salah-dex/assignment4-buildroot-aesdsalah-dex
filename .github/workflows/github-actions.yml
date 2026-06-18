@@ -1,4 +1,9 @@
 name: assignment-test
+
+concurrency:
+  group: buildroot-${{ github.repository }}
+  cancel-in-progress: true
+
 on:
     push:
         tags-ignore:
@@ -17,9 +22,16 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
 
-      - name: Configure Git HTTPS auth
-        run: |
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Run full test
+        env:
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          FORCE_UNSAFE_CONFIGURE: 1
         run: ./full-test.sh
+
+      - name: Cleanup
+        if: always()
+        run: ssh-add -D
