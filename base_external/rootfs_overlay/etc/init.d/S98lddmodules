@@ -1,0 +1,33 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          lddmodules
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Load and unload ldd kernel modules
+### END INIT INFO
+case "$1" in
+  start)
+    echo "Loading ldd kernel modules..."
+    modprobe scull
+    modprobe faulty
+    modprobe hello
+    ;;
+  stop)
+    echo "Unloading ldd kernel modules..."
+    rmmod hello
+    rmmod faulty
+    rmmod scull
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
