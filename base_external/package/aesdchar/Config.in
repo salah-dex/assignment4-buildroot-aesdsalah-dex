@@ -1,0 +1,4 @@
+config BR2_PACKAGE_AESDCHAR
+    bool "AESD Char driver"
+    help 
+      Add support for aesd char driver kernel module

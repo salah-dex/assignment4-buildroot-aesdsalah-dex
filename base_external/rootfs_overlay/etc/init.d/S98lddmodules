@@ -9,14 +9,19 @@
 ### END INIT INFO
 case "$1" in
   start)
-    echo "Loading ldd kernel modules..."
-    modprobe scull
-    modprobe faulty
-    modprobe hello
+    echo "Loading scull kernel modules..."
+    modprobe scull || echo "ERROR: scull failed"
+    echo "Loading aesdchar..."
+    /etc/load_aesdchar || echo "ERROR: aesdchar failed"
+    echo "Loading hello kernel module..."
+    modprobe hello || echo "ERROR: hello failed"
+    echo "Loading faulty kernel module..."
+    modprobe faulty || echo "ERROR: faulty failed"
     ;;
   stop)
     echo "Unloading ldd kernel modules..."
     rmmod hello
+    /etc/unload_aesdchar || echo "ERROR: aesdchar failed"
     rmmod faulty
     rmmod scull
     ;;
