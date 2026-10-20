@@ -1,7 +1,7 @@
 ### AESD CHAR DRIVER
 # This package builds the aesdchar kernel module and installs it to the target rootfs
 AESDCHAR_SITE = git@github.com:salah-dex/assignment8-aesdsalah-dex-.git
-AESDCHAR_VERSION = 439bcaeb82092d3da9f8f13e02b6742bb8326a0d
+AESDCHAR_VERSION = 9da610b049ad6e572369c74e7105e837d6ac8d69
 AESDCHAR_SITE_METHOD = git
 AESDCHAR_LICENSE = GPL-2.0
 AESDCHAR_LICENSE_FILES = COPYING
